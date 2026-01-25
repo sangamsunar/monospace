@@ -5,7 +5,7 @@ import { formatDate } from "../lib/utils.js";
 import api from "../lib/axios.js";
 import toast from "react-hot-toast";
 
-const NoteCard = ({ note }) => {
+const NoteCard = ({ note, setNotes }) => {
   const handleDelete = async (e, id) => {
     e.preventDefault(); //get rid of the navigation behaviour
 
@@ -13,6 +13,7 @@ const NoteCard = ({ note }) => {
 
     try {
       await api.delete(`/notes/${id}`);
+      setNotes((prev) => prev.filter((note) => note._id !== id)); //get rid of the deleted one
       toast.success("Note deleted successfully");
     } catch (error) {
       console.log("Error in handleDelete", error);
